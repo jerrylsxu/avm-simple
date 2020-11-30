@@ -1,30 +1,28 @@
 <template>
     <view class="main">
-        <scroll-view class="container" scroll-y scroll-enabled="false">
-            <list-view class="listView" id="listView" cellTypeKey="type" onscrolltoupper={this.onscrolltoupper}>
-				<list-header class="listHeader">
-					<image width="20px" height="20px" src="../image/loading.gif"></image>
-				</list-header>
-                <cell cellType="user" class="cellUser">
-                    <image class="icon" src={item.icon}></image>
-                    <view class="leftArrow"></view>
-                    <view class="contentBgUser">
-                        <text class="text">{item.text}</text>
-                    </view>
-                </cell>
-                <cell cellType="self" class="cellSelf">
-                    <image class="icon" src={item.icon}></image>
-                    <view class="rightArrow"></view>
-                    <view class="contentBgSelf">
-                        <text class="text">{item.text}</text>
-                    </view>
-                </cell>
-            </list-view>
-            <view class="input-bar">
-                <textarea id="input" class="input" autoHeight onfocus={this.onfocus} onconfirm={this.sendMsg}></textarea>
-                <button class="sendBtn" onclick="sendMsg();">发送</button>
-            </view>
-        </scroll-view>
+        <list-view class="listView" id="listView" cellTypeKey="type" onscrolltoupper={this.onscrolltoupper}>
+            <list-header class="listHeader">
+                <image width="20px" height="20px" src="../image/loading.gif"></image>
+            </list-header>
+            <cell cellType="user" class="cellUser">
+                <image class="icon" src={item.icon}></image>
+                <view class="leftArrow"></view>
+                <view class="contentBgUser">
+                    <text class="text">{item.text}</text>
+                </view>
+            </cell>
+            <cell cellType="self" class="cellSelf">
+                <image class="icon" src={item.icon}></image>
+                <view class="rightArrow"></view>
+                <view class="contentBgSelf">
+                    <text class="text">{item.text}</text>
+                </view>
+            </cell>
+        </list-view>
+        <view class="input-bar">
+            <textarea id="input" class="input" autoHeight onfocus={this.onfocus} onconfirm={this.sendMsg}></textarea>
+            <button class="sendBtn" onclick="sendMsg();">发送</button>
+        </view>
         <safe-area></safe-area>
     </view>
 </template>
@@ -33,7 +31,7 @@ export default{
     name:'detail',
     data(){
         return{
-			
+            
         }
     },
     methods:{
@@ -157,11 +155,13 @@ export default{
 			}, 800);
 		},
         scrollToBottom(animated) {
-            var listView = document.getElementById('listView');
-            listView.scrollTo({
-                position: 'lower',
-                animated: animated
-            });
+            setTimeout(function(){
+                var listView = document.getElementById('listView');
+                listView.scrollTo({
+                    position: 'lower',
+                    animated: animated
+                });
+            }, 30);
         }
     }
 }
@@ -170,9 +170,6 @@ export default{
     .main {
         height: 100%;
         background-color: #fdf3cf;
-    }
-    .container {
-        flex: 1;
     }
     .listView {
         flex: 1;
