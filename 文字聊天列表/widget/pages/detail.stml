@@ -116,7 +116,6 @@ export default{
 			if (more) {
 				listView.insert({
 					data: msgList,
-					position: 'start',
                     index: 0
 				});
 			} else {
