@@ -32,7 +32,7 @@
                 
             },
             itemAction(e){
-                var item = this.data.lists[e.target.dataset.index];
+                var item = this.data.lists[e.currentTarget.dataset.index];
                 api.openWin({
                     name: item.name,
                     url: item.url,

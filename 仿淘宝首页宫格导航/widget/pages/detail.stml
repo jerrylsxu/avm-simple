@@ -103,7 +103,7 @@ export default{
         },
         itemclicked(e){
             api.alert({
-                msg: '点击了第' + e.target.dataset.index + '项'
+                msg: '点击了第' + e.currentTarget.dataset.index + '项'
             });
         }
     }
