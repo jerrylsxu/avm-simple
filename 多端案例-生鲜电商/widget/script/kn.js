@@ -19,7 +19,7 @@ var $kn = (function(){
             param.headers['Content-Type'] = 'application/json; charset=utf-8';
         }
         if (param.url) {
-            var baseUrl = 'https://a6048882551629-dev.apicloud-saas.com/api/';
+            var baseUrl = 'https://a8888888888888-pd.apicloud-saas.com/api/';
             param.url = baseUrl + param.url;
         }
         api.ajax(param, function(ret, err) {

@@ -2,7 +2,7 @@
     <scroll-view class="main" scroll-y>
         <view style={'height:'+this.data.swiperHeight+'px;'}>
             <swiper class="swiper" autoplay circular onchange={this.onchange}>
-                <swiper-item v-for="(_item,index) in picList" data-index={index} onclick={this.ontapimg}>
+                <swiper-item v-for="(_item,_index) in picList" data-index={_index} onclick={this.ontapimg}>
                     <image class="img" placeholder="../image/default_square.png" src={_item} mode="aspectFit" thumbnail="false"></image>
                 </swiper-item>
             </swiper>
@@ -29,7 +29,7 @@ export default{
         },
         ontapimg(e){
             api.alert({
-                msg: '点击了第' + e.target.dataset.index + '项'
+                msg: '点击了第' + e.currentTarget.dataset.index + '项'
             });
         },
         onchange(e){

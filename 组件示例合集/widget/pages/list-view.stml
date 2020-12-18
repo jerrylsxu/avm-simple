@@ -74,7 +74,7 @@
 			},
             itemClick(e) {
                 api.alert({
-                    msg: '当前项索引：' + e.target.index
+                    msg: '当前项索引：' + e.currentTarget.index
                 });
 			}
         }
