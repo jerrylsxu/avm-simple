@@ -27,12 +27,12 @@ avm.js基于函数映射机制，将微信小程序的wx.fun_xx系列api映射�
 
 ### 使用步骤
 
-1. 使用[APICloud Studio 3](https://www.apicloud.com/studio3) 作为开发工具
-2. 下载本源码
-3. 在开发工具中新建项目，并将本源码导入新建的项目中，注意更新config.xml中的appid为你项目的appid
-4. 使用Applpader进行真机同步调试预览
-5. 或者提交项目源码，并为当前项目云编译自定义Loader进行真机同步调试预览
-6. [云编译](https://www.apicloud.com/appoverview) 生成Android & iOS App以及微信小程序源码包
+1. 使用[APICloud Studio 3](https://www.apicloud.com/studio3) 作为开发工具。
+2. 下载本源码。
+3. 在开发工具中新建项目，并将本源码导入新建的项目中，注意更新config.xml中的appid为你项目的appid。
+4. 使用AppLoader进行真机同步调试预览。
+5. 或者提交项目源码，并为当前项目云编译自定义Loader进行真机同步调试预览。
+6. [云编译](https://www.apicloud.com/appoverview) 生成Android & iOS App以及微信小程序源码包。
 
 ## License
 
