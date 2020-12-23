@@ -4,6 +4,7 @@
   "bgColor": "#f3f3f3",
   "hideNavigationBar": false,
   "navigationBar": {
+    "hideBackButton": true,
     "background": "#f8f8f8",
     "shadow": "#ddd"
   }
