@@ -43,7 +43,7 @@
             </view>
             <view class="detail shrink">
                 <text class="detailTitle">商品详情</text>
-                <frame class="detailFrame" name="detailFrame" url="https://docs.apicloud.com" useWKWebView avm="false"></frame>
+                <frame class="detailFrame" name="detailFrame" url="" useWKWebView avm="false"></frame>
             </view>
         </scroll-view>
         <view class="footer">

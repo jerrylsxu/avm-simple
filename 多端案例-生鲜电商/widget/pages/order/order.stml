@@ -56,13 +56,13 @@
                     <image class="item-icon" src="../../image/order_pay.png"/>
                     <text class="text-black">付款方式</text>
                 </view>
-                <view v-for="(item,index) in payList" class="list-item">
+                <view v-for="(item,index) in payList" class="list-item" data-name={item.name} onclick="onpaymethodchange">
                     <view class="pay-left">
                         <image class="payIcon" src={item.icon}></image>
                         <text class="payName">{item.name}</text>
                         <image v-if="item.recommend" style="width:17px;height:17px;" src="../../image/recommend.png"></image>
                     </view>
-                    <checkbox checked={item.selected} icon="../image/order_off.png" selectedIcon="../../image/order_on.png"></checkbox>
+                    <image style="width:25px;height:25px;" src={item.name==payMethod?'../../image/order_on.png':'../../image/order_off.png'}></image>
                 </view>
             </view>
         </scroll-view>
@@ -94,19 +94,17 @@ export default{
             payList:[{
                 icon:'../../image/icon_balance_pay.png',
                 name:'余额支付',
-                recommend:true,
-                selected:false
+                recommend:true
             },{
                 icon:'../../image/icon_wxpay.png',
                 name:'微信支付',
-                recommend:true,
-                selected:true
+                recommend:true
             },{
                 icon:'../../image/icon_alipay.png',
                 name:'支付宝',
-                recommend:false,
-                selected:false
-            }]
+                recommend:false
+            }],
+            payMethod: '微信支付'
         }
     },
     methods:{
@@ -132,6 +130,12 @@ export default{
                     api.closeWin();
                 }
             });
+        },
+        onpaymethodchange(e) {
+            var name = e.currentTarget.dataset.name;
+            if (this.data.payMethod != name) {
+                this.data.payMethod = name;
+            }
         },
         fnBuy () {
             api.toast({
