@@ -1,0 +1,29 @@
+<template>
+    <scroll-view class="main" scroll-y>
+        <rich-text nodes={nodes}></rich-text>
+    </scroll-view>
+</template>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+</style>
+<script>
+    export default {
+        name: 'test',
+        data(){
+            return {
+                nodes: ''
+            }
+        },
+        methods:{
+            apiready(){
+                this.data.nodes = `
+                <p>
+                    This is <i><b>rich text</b></i>.
+                </p>`;
+            }
+        }
+    }
+</script>

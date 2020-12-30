@@ -29,7 +29,7 @@
         },
         methods: {
             installed(){
-                let lists = ['view', 'text', 'image', 'button', 'input', 'textarea', 'progress', 'slider', 'switch', 'checkbox', 'radio', 'picker', 'label', 'form', 'swiper', 'scroll-view', 'list-view', 'refresh', 'video', 'camera', 'frame', 'frame-group', 'safe-area'];
+                let lists = ['view', 'text', 'rich-text', 'image', 'button', 'input', 'textarea', 'progress', 'slider', 'switch', 'checkbox', 'radio', 'picker', 'label', 'form', 'swiper', 'scroll-view', 'list-view', 'refresh', 'video', 'camera', 'frame', 'frame-group', 'safe-area'];
                 let result = [];
                 for (let index = 0; index < lists.length; index++) {
                     const name = lists[index];
