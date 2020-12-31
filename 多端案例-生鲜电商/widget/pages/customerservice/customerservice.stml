@@ -12,7 +12,7 @@
                 </view>
             </scroll-view>
             <view class="input-bar">
-                <textarea id="input" class="input" auto-height onfocus={this.onfocus} onconfirm={this.sendMsg}></textarea>
+                <textarea id="input" class="input" auto-height show-confirm-bar={false} onfocus={this.onfocus} onconfirm={this.sendMsg}></textarea>
                 <text class="sendBtn" onclick="sendMsg();">发送</text>
             </view>
             <safe-area></safe-area>
