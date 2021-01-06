@@ -34,6 +34,20 @@ avm.js 基于函数映射机制，将微信小程序的 wx.fun_xx 系列 api 映
 5. 或者提交项目源码，并为当前项目云编译自定义 Loader 进行真机同步调试预览。
 6. [云编译](https://www.apicloud.com/appoverview?uzchannel=30) 生成 Android & iOS App 以及微信小程序源码包。
 
+### 联系我们
+
+如果您在使用过程中遇到了问题，或者有更多的宝贵意见，欢迎到APICloud社区和QQ群与我们进行互动讨论。
+
+官方技术交流群：339762594
+
+官方社区：[https://community.apicloud.com/](https://community.apicloud.com/?uzchannel=30)
+
+### 其它
+
+感谢关注本项目，如果觉得对您有帮助，希望给个 star 鼓励一下。
+
+如需进一步了解技术细节和实现，请参阅 docs 目录下的[《源码解析文档》](https://github.com/apicloudcom/avm-simple/tree/master/多端案例-生鲜电商/docs)。
+
 ## License
 
 MIT © [APICloud](https://www.apicloud.com/?uzchannel=30)

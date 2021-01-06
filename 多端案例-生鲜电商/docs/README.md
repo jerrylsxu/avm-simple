@@ -3,6 +3,8 @@
 > 此项目为生鲜电商类应用，主要功能包括商品列表、商品详情展示、购物车、登录注册、个人中心等。
 > 
 > 项目源码在 https://github.com/apicloudcom/avm-simple 仓库下”多端案例-生鲜电商“目录下。
+> 
+> 如果觉得对您有帮助，希望给个 star 鼓励一下。
 
 项目中前端采用 [avm 多端开发技术](https://docs.apicloud.com/apicloud3?uzchannel=30)进行开发，要点包括 scroll-view 滚动视图、下拉刷新、输入处理、swiper 轮播图、网络请求封装等。使用 APICloud 多端技术进行开发，实现一套代码多端运行，支持编译成 Android & iOS App 以及微信小程序。
 
