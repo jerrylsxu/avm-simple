@@ -1,0 +1,159 @@
+<template>
+    <view class="main">
+        <view class="grid-container">
+            <scroll-view class="scroll-view" scroll-x scroll-y="false" show-scrollbar="false" onscroll="onscroll">
+                <view class="scroll-content" style={'width:'+contentWidth+'px;'}>
+                    <view class="item" style={'width:'+itemWidth+'px;'} v-for="(item,index) in itemList" data-index={index} onclick="itemclicked">
+                        <image class="icon" src={item.icon}></image>
+                        <text class="name">{item.name}</text>
+                    </view>
+                </view>
+            </scroll-view>
+            <view class="indicator-bg" style={'width:'+indicatorBgWidth+'px;'}>
+                <view class="indicator" style={'left:'+left+'px;'}></view>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+export default{
+    name:'detail',
+    data(){
+        return{
+            contentWidth: 0,
+            itemWidth: 0,
+            indicatorBgWidth: 0,
+            left: 0,
+            itemList: [{
+                icon: '../../image/tianmao.png',
+                name: '天猫新品'
+            },{
+                icon: '../../image/jinribaokuan.png',
+                name: '今日爆款'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '天猫国际'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '芭芭农场'
+            },{
+                icon: '../../image/tianmaochaoshi.png',
+                name: '天猫超市'
+            },{
+                icon: '../../image/eliaomo.png',
+                name: '饿了么'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '分类'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '天猫美食'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '阿里健康'
+            },{
+                icon: '../../image/koubei.png',
+                name: '口碑生活'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '天猫汽车'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '充值中心'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '飞猪旅行'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '领淘金币'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '阿里拍卖'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '淘鲜达'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '淘宝吃货'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '闲鱼'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '会员中心'
+            },{
+                icon: '../../image/taopiaopiao.png',
+                name: '淘票票'
+            },{
+                icon: '../../image/tianmao.png',
+                name: '土货鲜食'
+            }]
+        }
+    },
+    methods:{
+        apiready(){
+            let itemWidth = api.winWidth / 5;
+            this.data.contentWidth = itemWidth * Math.ceil(this.data.itemList.length / 2);
+            this.data.itemWidth = itemWidth;
+            this.data.indicatorBgWidth = Math.max(this.data.contentWidth/api.winWidth*25, 25);
+        },
+        onscroll(e){
+            let x = e.detail.x;
+            this.data.left = 1.0 * x / api.winWidth * 25;
+        },
+        itemclicked(e){
+            api.alert({
+                msg: '点击了第' + e.currentTarget.dataset.index + '项'
+            });
+        }
+    }
+}
+</script>
+<style>
+    .main {
+        height: 100%;
+        background-color: #f8f8f8;
+    }
+    .grid-container {
+        align-items: center;
+        height: 180px;
+        background-color: #fff;
+    }
+    .scroll-view {
+        flex-direction: row;
+        width: 100%;
+        height: 160px;
+        overflow: scroll;
+    }
+    .scroll-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .item {
+        align-content: center;
+        align-items: center;
+        height:50%;
+    }
+    .icon {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+    }
+    .name {
+        color: grey;
+    }
+    .indicator-bg {
+        margin-top: 6px;
+        width: 50px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: #ddd;
+        overflow: hidden;
+    }
+    .indicator {
+        width: 25px;
+        height: 100%;
+        border-radius: 2px;
+        background-color: rgb(245, 131, 131);
+    }
+</style>

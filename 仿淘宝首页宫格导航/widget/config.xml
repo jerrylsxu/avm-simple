@@ -22,7 +22,5 @@
 
 	<preference name="statusBarAppearance" value="true"/>
 
-    <preference name="avm" value="true"/>
-
 </widget>
 

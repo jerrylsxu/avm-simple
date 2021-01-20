@@ -1,0 +1,242 @@
+<template>
+    <view class="main">
+        <camera id="camera" device-position={devicePosition}>
+            <view class="change-btn" onclick={this.changeDevicePosition}></view>
+            <view class="toolbar">
+                <view class="close-btn" onclick="api.closeWin();"></view>
+                <div class="circle progress-bg" style={'transform:scale(' + progressScale + ',' + progressScale + ');'} ontouchstart={this.ontouchstart} ontouchend={this.ontouchend} ontouchcancel={this.ontouchcancel}>
+                    <div class="half left">
+                        <div class="circle left-circle" style={'transform:rotateZ(' + (leftDeg) + 'deg);'}></div>
+                    </div>
+                    <div class="half right">
+                        <div class="circle right-circle" style={'transform:rotateZ(' + (rightDeg) + 'deg);'}></div>
+                    </div>
+                </div>
+                <view class="placeholder"></view>
+            </view>
+        </camera>
+        <view v-if="previewMode" class="preview">
+            <view class="preview-container">
+                <image v-if="showPreviewImg" class="preview-img" :src="previewImg"></image>
+                <video v-else class="preview-video" :src="previewVideo" autoplay loop controls="false"></video>
+            </view>
+            <view class="close-preview-btn" onclick={this.closePreview}></view>
+        </view>
+    </view>
+</template>
+<script>
+export default{
+    name:'detail',
+    data(){
+        return{
+            devicePosition: 'back',
+            progressScale: 1,
+            leftDeg: -45,
+            rightDeg: -45,
+            previewMode: false,
+            showPreviewImg: false,
+            showPreviewVideo: false,
+            previewImg: '',
+            previewVideo: ''
+        }
+    },
+    methods:{
+        startProgressAnimation(){
+            var that = this;
+            var prog = 0;
+            var deg = 0;
+            var initialDeg = -45;
+            var halfDone;
+            var timer = setInterval(function() {
+                prog += 0.0067;
+                deg = 360 * prog;
+                if (deg < 180) {
+                    that.data.rightDeg = initialDeg + deg;
+                }
+                else if (deg < 360) {
+                    if (!halfDone) {
+                        that.data.rightDeg = initialDeg + 180;
+                        halfDone = true;
+                    }
+                    that.data.leftDeg = initialDeg + deg - 180;
+                }
+                else {
+                    that.data.leftDeg = initialDeg + 180;
+                    that.stopRecord();
+                    that.endProgressAnimation();
+                }
+            }, 100);
+            that.interval = timer;
+            this.data.progressScale = 1.2;
+        },
+        endProgressAnimation() {
+            let that = this;
+            if (that.interval) {
+                clearInterval(that.interval);
+                that.interval = null;
+            }
+            this.data.leftDeg = -45;
+            this.data.rightDeg = -45;
+            this.data.progressScale = 1;
+        },
+        changeDevicePosition(e){
+            if (this.data.devicePosition == 'back') {
+                this.data.devicePosition = 'front';
+            } else {
+                this.data.devicePosition = 'back';
+            }
+        },
+        stopRecord() {
+            let that = this;
+            let camera = document.getElementById('camera');
+            camera.stopRecord(function(ret){
+                that.data.previewVideo = ret.tempVideoPath;
+                that.data.previewMode = true;
+                that.data.showPreviewImg = false;
+            });
+        },
+        closePreview(e){
+            this.data.previewMode = false;
+            this.data.showPreviewImg = false;
+        },
+        ontouchstart(e) {
+            let that = this;
+            that.timestamp = new Date().getTime();
+            let timeout = setTimeout(function(){
+                // 录像模式
+                let camera = document.getElementById('camera');
+                camera.startRecord();
+                that.startProgressAnimation();
+            }, 500);
+            that.timeout = timeout;
+        },
+        ontouchend(e) {
+            if (this.data.previewMode) {
+                return;
+            }
+            let that = this;
+            let camera = document.getElementById('camera');
+            let timestamp = new Date().getTime();
+            if (timestamp - that.timestamp < 500) {
+                clearTimeout(that.timeout);
+                camera.takePhoto(function(ret,err){
+                    that.data.previewImg = ret.tempImagePath;
+                    that.data.previewMode = true;
+                    that.data.showPreviewImg = true;
+                });
+            } else {
+                this.stopRecord();
+                that.endProgressAnimation();
+            }
+        },
+        ontouchcancel(e) {
+            this.stopRecord();
+            this.endProgressAnimation();
+        }
+    }
+}
+</script>
+<style>
+    .main {
+        height: 100%;
+        background-color: #000;
+    }
+    #camera {
+        width: 100%;
+        height: 100%;
+    }
+    .toolbar {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        position: absolute;
+        bottom: 20;
+        width: 100%;
+        height: 100px;
+    }
+    .close-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        background: url(../../image/close.png);
+        background-size: 15px 15px;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    .placeholder {
+        width: 30px;
+        height: 30px;
+    }
+    .change-btn {
+        position: absolute;
+        top: 40px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        background: url(../../image/change.png);
+        background-size: 30px 26px;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    /* 圆形进度条 */
+    .circle {
+        width: 80px; 
+        height: 80px;
+        border-radius: 50%;
+        border: 10px solid #C0C0C0;
+    }
+    .progress-bg {
+        position: relative;
+        background-color: #fff;
+    }
+    .half {
+        position: absolute;
+        width: 40px; 
+        height: 80px;
+        top: -10px;
+        overflow: hidden;
+    }
+    .left {
+        left: -10px;
+    }
+    .right {
+        right: -10px;
+    }
+    .left-circle {
+        margin-right: -40px;
+        border-color: #00d04e;
+        border-left-color: transparent;
+        border-top-color: transparent;
+    }
+    .right-circle {
+        margin-left: -40px;
+        border-color: #00d04e;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+    }
+    /* 预览 */
+    .preview {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    .preview-container,.preview-img,.preview-video {
+        width: 100%;
+        height: 100%;
+    }
+    .close-preview-btn {
+        position: absolute;
+        top: 40px;
+        left: 20px;
+        width: 30px;
+        height: 30px;
+        background: url(../image/back.png);
+        background-size: 15px 13px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+</style>

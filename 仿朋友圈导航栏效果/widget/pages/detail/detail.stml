@@ -1,0 +1,122 @@
+<template>
+    <view class="main">
+        <safe-area class="header" style={'opacity:'+opacity+';background:'+(isTranslucent?'rgba(0,0,0,0)':'#f1f1f1')}>
+            <view class="nav-bar">
+                <image class="nav-btn btn-back" src={isTranslucent?'../../image/back_white.png':'../../image/back_black.png'} onclick="api.closeWin();"></image>
+                <text hidden={isTranslucent?true:false} class="title">朋友圈</text>
+                <image class="nav-btn btn-camera" src={isTranslucent?'../../image/camera_white.png':'../../image/camera_black.png'}></image>
+            </view>
+        </safe-area>
+        <scroll-view class="scroll-view" scroll-y enable-back-to-top onscroll="onscroll">
+            <view class="scroll-content">
+                <image class="bg-img" style={'height:'+bgImgHeight+'px;margin-top:'+offy+'px;'} src="../../image/bg.png"></image>
+            </view>
+        </scroll-view>
+    </view>
+</template>
+<script>
+export default{
+    name:'detail',
+    data(){
+        return{
+            isTranslucent: false,
+            bgImgHeight: 0,
+            threshold: 0,
+            offy: 0,
+            opacity: 1
+        }
+    },
+    methods:{
+        apiready(){
+            let navHeight = 44;
+            let top = api.safeArea.top;
+            let offy = navHeight + top + 20;
+            this.data.threshold = api.winWidth - offy - navHeight - top;
+            this.data.bgImgHeight = api.winWidth;
+            this.data.offy = -offy;
+            this.setTranslucent(true);
+        },
+        setTranslucent(isTranslucent){
+            if (this.data.isTranslucent != isTranslucent) {
+                this.isTranslucent = isTranslucent;
+                api.setStatusBarStyle && api.setStatusBarStyle({
+                    style: isTranslucent?'light':'dark'
+                });
+            }
+        },
+        setOpacity(opacity){
+            if (this.data.opacity != opacity) {
+                this.data.opacity = opacity;
+            }
+        },
+        onscroll(e){
+            let threshold = this.data.threshold;
+            let y = e.detail.y;
+            let delta = threshold - y;
+            if (delta > 0) {
+                this.setTranslucent(true);
+                if (delta < 20) {
+                    this.setOpacity(delta / 20);
+                } else {
+                    this.setOpacity(1);
+                }
+            } else {
+                this.setTranslucent(false);
+                if (delta > -20) {
+                    
+                } else if (delta > -40) {
+                    this.setOpacity(Math.abs((delta+20) / 20));
+                } else {
+                    this.setOpacity(1);
+                }
+            }
+        }
+    }
+}
+</script>
+<style>
+    .main {
+        height: 100%;
+        background-color: #f8f8f8;
+    }
+    .header {
+        position: absolute;
+        width: 100%;
+        z-index: 999;
+    }
+    .nav-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 44px;
+    }
+    .nav-btn {
+        width: 20px;
+        height: 20px;
+    }
+    .nav-btn:active {
+        opacity: 0.7;
+    }
+    .title {
+        font-size: 18px;
+    }
+    .btn-back {
+        margin-left: 8px;
+    }
+    .btn-camera {
+        margin-right: 8px;
+    }
+    .scroll-view {
+        flex:1;
+    }
+    .bg-img {
+        position: absolute;
+        background-color: green;
+        width: 100%;
+    }
+    .scroll-content {
+        height: 2000px;
+        background-color: white;
+    }
+</style>

@@ -1,0 +1,39 @@
+<template>
+    <scroll-view class="main" scroll-y>
+        <text>{'拖动过程中的value：' + changingValue}</text>
+        <text>{'拖动完成后的value：' + value}</text>
+        <slider block-size="20" onchange={this.onchange} onchanging={this.onchanging}></slider>
+    </scroll-view>
+</template>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+    text {
+        margin: 8px;
+    }
+    slider {
+        margin: 8px;
+        width: 60%;
+    }
+</style>
+<script>
+    export default {
+        name: 'test',
+        data(){
+            return {
+                value:0,
+                changingValue:0
+            }
+        },
+        methods:{
+            onchange(e){
+                this.data.value = e.detail.value;
+            },
+            onchanging(e){
+                this.data.changingValue = e.detail.value;
+            }
+        }
+    }
+</script>

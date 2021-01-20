@@ -1,0 +1,226 @@
+<template>
+    <list-view id="listView" class="main" enable-back-to-top onscrolltolower={this.onscrolltolower}>
+        <refresh class="refresh" state={refreshState} onstatechange={this.onstatechange}>
+            <image class={refreshIconClass} src="../../image/refresh.png"></image>
+            <image class={refreshLoadingClass} src="../../image/loading.gif"></image>
+            <text class="refreshStateDesc">{refreshStateDesc}</text>
+        </refresh>
+        <cell class="cell">
+            <view data-id={item.id} class="container" onclick={this.fnOpenDetailWin}>
+                <image class="thumbnail" src={item.thumbnail} placeholder="../../image/default.png"></image>
+                <view class="info">
+                    <text class="info-name">{item.name}</text>
+                    <text class="info-description">{item.description}</text>
+                    <text class="info-price">{'￥'+item.price}</text>
+                    <text class="info-origin-price">{'￥'+item.originPrice}</text>
+                </view>
+            </view>
+        </cell>
+        <list-footer class="footer">
+            <text class="loadDesc">{haveMoreData?'加载中...':'没有啦！'}</text>
+        </list-footer>
+    </list-view>
+</template>
+<script>
+export default {
+    name: 'detail',
+    data() {
+        return {
+            haveMoreData: true,
+            refreshState: 'normal'
+        }
+    },
+    computed: {
+        refreshIconClass(){
+            if (this.data.refreshState == 'normal') {
+                return 'refreshIcon-normal';
+            } else if (this.data.refreshState == 'dragging') {
+                return 'refreshIcon-dragging';
+            } else if (this.data.refreshState == 'refreshing') {
+                return 'refreshIcon-refreshing';
+            }
+        },
+        refreshLoadingClass() {
+            if (this.data.refreshState == 'refreshing') {
+                return 'refreshLoading-refreshing';
+            } else {
+                return 'refreshLoading';
+            }
+        },
+        refreshStateDesc() {
+            if (this.data.refreshState == 'normal') {
+                return '下拉可以刷新';
+            } else if (this.data.refreshState == 'dragging') {
+                return '松开可以刷新';
+            } else if (this.data.refreshState == 'refreshing') {
+                return '刷新中...';
+            }
+        }
+    },
+    methods: {
+        onstatechange(e) {
+            var state = e.detail.state;
+            if (state == 'normal') {
+                this.data.refreshState = 'normal';
+            } else if (state == 'dragging') {
+                this.data.refreshState = 'dragging';
+            } else if (state == 'refreshing') {
+                this.data.refreshState = 'refreshing';
+                this.requestData(false);
+            }
+        },
+        apiready() {
+            var that = this;
+            setTimeout(function(){
+                that.data.refreshState = 'refreshing';
+                that.requestData(false);
+            }, 300);
+        },
+        requestData(loadMore_) {
+            var limit = 20;
+            var that = this;
+            api.ajax({
+                url: 'https://a8888888888888-pd.apicloud-saas.com/api/wares/getWareList',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'x-apicloud-mcm-key': 'cZKzX7DabDmYyfez'
+                },
+                data: {
+                    body: {
+                        limit: limit
+                    }
+                }
+            }, function(ret, err) {
+                if (ret && ret.data) {
+                    var data = ret.data;
+                    var listView = document.getElementById('listView');
+                    if (loadMore_) {
+                        listView.insert({
+                            data: data
+                        });
+                        that.dataList = that.dataList.concat(data);
+                    } else {
+                        that.dataList = data;
+                        listView.load({
+                            data: data
+                        });
+                    }
+                    that.data.haveMoreData = data.length == limit;
+                } else {
+                    api.toast({
+                        msg: '加载数据失败',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+                that.data.refreshState = 'normal';
+            });
+        },
+        onscrolltolower() {
+            if (this.data.haveMoreData) {
+                this.requestData(true);
+            }
+        },
+        fnOpenDetailWin(e) {
+            
+        }
+    }
+}
+</script>
+<style>
+    .refresh {
+        align-items: center;
+        justify-content: center;
+    }
+    .refreshStateDesc {
+        color: #e3007f;
+        font-size: 13px;
+    }
+    .refreshIcon-normal {
+        position: absolute;
+        width: 25px;
+        height: 22px;
+        bottom: 21px;
+        left: 70px;
+        transition-property: transform;
+        transition-duration: 100ms;
+        transform: rotate(0);
+        visibility: visible;
+    }
+    .refreshIcon-dragging {
+        transform: rotate(180deg);
+    }
+    .refreshIcon-refreshing {
+        visibility: hidden;
+    }
+    .refreshLoading {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        bottom: 21px;
+        left: 70px;
+        visibility: hidden;
+    }
+    .refreshLoading-refreshing {
+        visibility: visible;
+    }
+
+    .main {
+        flex: 1;
+    }
+    .cell {
+        height: 130px;
+        padding: 0 8px;
+    }
+    .container {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-bottom: 0.5px solid #d1d1d1;
+    }
+    .container:active {
+        background-color: #f8f8f8;
+    }
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+    }
+    .info {
+        justify-content: center;
+        flex: 1;
+        height: 100px;
+        padding-left: 8px;
+    }
+    .info-name {
+        font-size: 16px;
+        color: #000;
+        font-weight: 500;
+    }
+    .info-description {
+        font-size: 14px;
+        color: gray;
+        margin-top: 4px;
+    }
+    .info-price {
+        font-size: 14px;
+        color: #e3007f;
+        margin-top: 4px;
+    }
+    .info-origin-price {
+        font-size: 11px;
+        color: #c0c0c0;
+        text-decoration: line-through;
+        margin-top: 4px;
+    }
+    .footer {
+        height: 44px;
+        justify-content: center;
+        align-items: center;
+    }
+    .loadDesc {
+        width: 200px;
+        text-align: center;
+    }
+</style>

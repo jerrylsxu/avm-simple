@@ -46,7 +46,7 @@
         <minicart></minicart>
     </view>
     <view class="cityselect" v-if="citySelectorOpened">
-        <cityselector></cityselector>
+        <cityselector onresult="oncityselector"></cityselector>
     </view>
   </view>
 </template>
@@ -157,25 +157,6 @@ export default{
             }, function(ret, err) {
                 that.updateShoppingCart(ret.value);
             });
-            
-            // 监听城市选择事件（自定义）
-            api.addEventListener({
-                name: 'citySelectResult'
-            }, function(ret, err) {
-                var currentCity = ret.value.currentCity;
-                if (currentCity) {
-                    if (that.data.cityName != currentCity.name) {
-                        that.data.cityName = currentCity.name;
-
-                        if (that.data.wareTypeList.length > 0) {
-                            that.updatedWareList();
-                        } else {
-                            that.fnGetWareTypeList();
-                        }
-                    }
-                }
-                that.data.citySelectorOpened = false;
-            });
 
             // 拦截Android的返回键，在首页点击返回键，提示退出应用
             api.addEventListener({
@@ -193,6 +174,22 @@ export default{
                     }
                 });
             });
+        },
+
+        oncityselector(e){
+            var currentCity = e.detail;
+            if (currentCity && currentCity.name) {
+                if (this.data.cityName != currentCity.name) {
+                    this.data.cityName = currentCity.name;
+
+                    if (this.data.wareTypeList.length > 0) {
+                        this.updatedWareList();
+                    } else {
+                        this.fnGetWareTypeList();
+                    }
+                }
+            }
+            this.data.citySelectorOpened = false;
         },
 
         fnOpenCitySelectorFrame() {

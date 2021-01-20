@@ -1,0 +1,170 @@
+<template>
+    <scroll-view class="main" scroll-y>
+        <text class="title">使用默认控件</text>
+		<video src={url} poster={poster} mode="aspectFit"></video>
+        <text class="title">自定义控件</text>
+		<video id="video" src={url} poster={poster} controls="false" currentTime={this.data.currentTime} onplay={this.onplay} onpause={this.onpause} onended={this.onended} ontimeupdate={this.ontimeupdate} onwaiting={this.onwaiting} onerror={this.onerror} onprogress={this.onprogress} onloadedmetadata={this.onloadedmetadata}>
+            <view class="control-container">
+            <view class="control">
+				<text class="btn" onclick={this.playorpause}>{isPlaying?'暂停':'播放'}</text>
+				<text class="time">{timeProgressDesc}</text>
+				<view class="progress-container">
+					<progress activeColor="#999" value={loadProgressValue}></progress>
+					<slider block-size="12" backgroundColor="rgba(0,0,0,0)" value={sliderValue} onchange={this.onSliderChange} onchanging={this.onSliderChanging}/>
+				</view>
+				<text class="time">{totalTimeDesc}</text>
+				<text class="btn" onclick={this.fullScreenAction}>{fullScreen?'返回':'全屏'}</text>
+			</view>
+            <safe-area></safe-area>
+            </view>
+        </video>
+    </scroll-view>
+</template>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+    .title {
+        padding: 10px 0;
+        font-size: 20px;
+    }
+    video {
+        width: 100%;
+        height: 200px;
+        background-color: #666;
+    }
+    .control-container {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        background: rgba(50,50,50,0.4);
+    }
+    .control {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 44px;
+    }
+    .btn {
+        color: #fff;
+        padding: 6px 8px;
+    }
+    .time {
+        min-width: 50px;
+        text-align: center;
+        color: #fff;
+    }
+    .progress-container {
+        flex: 1;
+        justify-content: center;
+        height: 100%;
+    }
+    progress {
+        width: 100%;
+        height: 3px;
+    }
+    slider {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<script>
+    export default {
+        name: 'test',
+        data(){
+            return {
+                url: 'https://www.apicloud.com/img/new/newhome/video.mp4',
+                poster: '',
+                currentTime: 0,
+                totleTime: 0,
+                isPlaying: false,
+                sliderValue: 0,
+                loadProgressValue: 0,
+                timeProgressDesc: '00:00',
+                totalTimeDesc: '00:00',
+                fullScreen: false
+            }
+        },
+        methods: {
+            onplay(e) {
+                console.log('onplay');
+                this.data.isPlaying = true;
+            },
+            onpause(e) {
+                console.log('onpause');
+            },
+            onended(e) {
+                console.log('onend');
+                this.data.isPlaying = false;
+            },
+            ontimeupdate(e) {
+                var duration = e.detail.duration;
+                var currentTime = e.detail.currentTime;
+                this.data.sliderValue = parseInt(currentTime/duration*100);
+                this.data.timeProgressDesc = this.timeDesc(currentTime<duration?currentTime:Math.ceil(currentTime));
+            },
+            onwaiting(e) {
+                console.log('onwaiting');
+                this.data.isPlaying = false;
+            },
+            onerror(e) {
+                console.log('onerror');
+                this.data.isPlaying = false;
+            },
+            onprogress(e) {
+                var buffered = e.detail.buffered;
+                this.data.loadProgressValue = buffered;
+            },
+            onloadedmetadata(e) {
+                var duration = e.detail.duration;
+                this.data.totleTime = duration;
+                this.data.totalTimeDesc = this.timeDesc(Math.ceil(duration));
+            },
+            onSliderChange(e) {
+                var obj = document.getElementById('video');
+                obj.play();
+                this.data.isPlaying = true;
+            },
+            onSliderChanging(e) {
+                var obj = document.getElementById('video');
+                obj.pause();
+                this.data.isPlaying = false;
+                
+                var progress = e.detail.value;
+                var currentTime = parseInt(progress/100*this.data.totleTime);
+                this.data.currentTime = currentTime;
+            },
+            playorpause(e) {
+                var obj = document.getElementById('video');
+                if (this.data.isPlaying) {
+                    obj.pause();
+                } else {
+                    obj.play();
+                    this.data.playbackRate = 1.0;
+                }
+                this.data.isPlaying = !this.data.isPlaying;
+            },
+            fullScreenAction(e) {
+                var obj = document.getElementById('video');
+                this.data.fullScreen = !this.data.fullScreen;
+                if (this.data.fullScreen) {
+                    obj.requestFullScreen({orientation:'auto'});
+                } else {
+                    obj.exitFullScreen();
+                }
+            },
+            timeDesc(time) {
+                var hour = time<3600?0:parseInt(time/3600);
+                var minute = parseInt(time%3600/60);
+                var second = parseInt(time%60);
+                var str = '';
+                str += hour>0?(hour+':'):'';
+                str += minute>0?(minute>=10?(minute+':'):('0'+minute+':')):'00:';
+                str += second>0?(second>=10?second:('0'+second)):'00';
+                return str;
+            }
+        }
+    }
+</script>

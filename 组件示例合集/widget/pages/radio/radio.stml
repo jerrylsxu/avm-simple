@@ -1,0 +1,46 @@
+<template>
+    <scroll-view class="main" scroll-y>
+		<radio-group onChange={this.radiogroupChanged}>
+			<label>
+				<radio checked color="#f0f" value="radio_c"/>
+				<text>中国</text>
+			</label>
+			<label>
+				<radio color="#f0f" value="radio_a"/>
+				<text>美国</text>
+			</label>
+		</radio-group>
+		<radio-group onChange={this.radiogroupChanged}>
+			<label>
+				<radio checked icon="../../image/check.png" selectedIcon="../../image/checked.png" value="radio_c"/>
+				<text>中国</text>
+			</label>
+			<label>
+				<radio icon="../../image/check.png" selectedIcon="../../image/checked.png" value="radio_a"/>
+				<text>美国</text>
+			</label>
+		</radio-group>
+    </scroll-view>
+</template>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+    radio-group {
+        flex-direction:row;
+    }
+    label {
+        margin: 5px;
+    }
+</style>
+<script>
+    export default {
+        name: 'test',
+        methods:{
+            radiogroupChanged(e) {
+                console.log(e.detail.value);
+            }
+        }
+    }
+</script>

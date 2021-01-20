@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "url": "pages/main.stml",
+  "url": "pages/main/main.stml",
   "bgColor": "#f3f3f3",
   "hideNavigationBar": false,
   "navigationBar": {

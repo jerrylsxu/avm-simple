@@ -1,0 +1,29 @@
+<template>
+    <view class="main">
+        <navigation-bar title="自定义导航栏" rightButtonIcon="../../image/info.png" rightButtonWidth="20" onRightButton="onRightButton"></navigation-bar>
+    </view>
+</template>
+<script>
+import "../../components/navigationBar.stml"
+export default{
+    name:'detail',
+    data(){
+        return{
+            
+        }
+    },
+    methods:{
+        onRightButton(){
+            api.alert({
+                msg:'点击了右边按钮'
+            });
+        }
+    }
+}
+</script>
+<style>
+    .main {
+        height: 100%;
+        background-color: #f8f8f8;
+    }
+</style>

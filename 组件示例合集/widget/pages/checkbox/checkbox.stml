@@ -1,0 +1,46 @@
+<template>
+    <scroll-view class="main" scroll-y>
+		<checkbox-group onchange={this.checkboxgroupChanged}>
+			<label>
+				<checkbox checked color="#f0f" value="checkbox_c"/>
+				<text>中国</text>
+			</label>
+			<label>
+				<checkbox color="#f0f" value="checkbox_a"/>
+				<text>美国</text>
+			</label>
+		</checkbox-group>
+		<checkbox-group onchange={this.checkboxgroupChanged}>
+			<label>
+				<checkbox checked icon="../../image/check.png" selectedIcon="../../image/checked.png" value="checkbox_c"/>
+				<text>中国</text>
+			</label>
+			<label>
+				<checkbox icon="../../image/check.png" selectedIcon="../../image/checked.png" value="checkbox_a"/>
+				<text>美国</text>
+			</label>
+		</checkbox-group>
+    </scroll-view>
+</template>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+    checkbox-group {
+        flex-direction:row;
+    }
+    label {
+        margin: 5px;
+    }
+</style>
+<script>
+    export default {
+        name: 'test',
+        methods:{
+            checkboxgroupChanged(e) {
+                console.log(JSON.stringify(e.detail.value));
+            }
+        }
+    }
+</script>

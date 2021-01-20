@@ -1,0 +1,109 @@
+<template>
+    <scroll-view class="main" scroll-y>
+        <button onclick={this.switchMode}>{scanCodeMode?'切换为拍照':'切换为扫码'}</button>
+        <camera id="camera" v-if="scanCodeMode" mode="scanCode" onstop={this.onstop} onerror={this.onerror} oninitdone={this.oninitdone} onscancode={this.onscancode}>
+		</camera>
+        <view v-else>
+            <camera id="camera" device-position={devicePosition} onstop={this.onstop} onerror={this.onerror} oninitdone={this.oninitdone}>
+                <scroll-view class="btns" scroll-x>
+                    <button onclick={this.takePhoto}>拍照</button>
+                    <button onclick={this.startRecord}>开始录制</button>
+                    <button onclick={this.stopRecord}>停止录制</button>
+                    <button onclick={this.switchDevicePosition}>切换摄像头</button>
+                </scroll-view>
+            </camera>
+            <text>图片预览：</text>
+            <image id="image" src={previewUrl} mode="widthFix"/>
+            <text>视频预览：</text>
+            <video id="video" src={videoPath} poster={videoThumbPath}></video>
+        </view>
+    </scroll-view>
+</template>
+<style>
+    .main {
+        width: 100%;
+        height: 100%;
+    }
+    #camera {
+        width: 100%;
+        height: 400px;
+        background: #ccc;
+    }
+    .btns {
+        align-items: center;
+        width: 100%;
+        height: 44px;
+        position: absolute;
+        bottom: 0;
+        background: rgba(50,50,50,0.3);
+    }
+    #image {
+        width: 100%;
+    }
+    #video {
+        width: 100%;
+        height: 300px;
+    }
+</style>
+<script>
+    export default {
+        name: 'test',
+        data(){
+            return {
+                devicePosition: 'back',
+                previewUrl: '',
+                videoThumbPath: '',
+                videoPath: '',
+                scanCodeMode: false
+            }
+        },
+        methods:{
+            onstop(e) {
+                console.log('onstop');
+            },
+            onerror(e) {
+                console.log('onerror');
+            },
+            oninitdone(e) {
+                console.log('oninitdone');
+            },
+            onscancode(e) {
+                var text = e.detail.text;
+                api.alert({
+                    msg: text
+                });
+            },
+            switchMode(e) {
+                this.data.scanCodeMode = !this.data.scanCodeMode;
+            },
+            takePhoto(e) {
+                var that = this;
+                var obj = document.getElementById('camera');
+                obj.takePhoto({
+                    quality:'high'
+                }, function(ret, err){
+                    that.data.previewUrl = ret.tempImagePath;
+                });
+            },
+            startRecord(e) {
+                var obj = document.getElementById('camera');
+                obj.startRecord({
+                    quality:'high'
+                });
+            },
+            stopRecord(e) {
+                var that = this;
+                var obj = document.getElementById('camera');
+                obj.stopRecord({
+                    quality:'high'
+                }, function(ret, err){
+                    that.data.videoThumbPath = ret.tempThumbPath;
+                    that.data.videoPath = ret.tempVideoPath;
+                });
+            },
+            switchDevicePosition() {
+                this.data.devicePosition = this.data.devicePosition=='back'?'front':'back';
+            }
+        }
+    }
+</script>

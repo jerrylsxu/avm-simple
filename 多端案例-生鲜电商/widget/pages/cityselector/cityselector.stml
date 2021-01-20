@@ -27,12 +27,7 @@ export default{
             this.closeFrame();
         },
         closeFrame(currentCity) {
-            api.sendEvent({
-                name: 'citySelectResult',
-                extra: {
-                    currentCity: currentCity?currentCity:''
-                }
-            });
+            this.fire('result', currentCity);
         },
         fnGetCityList() {
             var that = this;

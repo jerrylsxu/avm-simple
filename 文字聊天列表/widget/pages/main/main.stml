@@ -1,0 +1,55 @@
+<template>
+    <scroll-view class="main" scroll-y>
+        <view class="item" v-for="(item, index) in lists" data-index={index} onclick={this.itemAction}>
+            <text class="name">{item.name}</text>
+        </view>
+    </scroll-view>
+</template>
+<script>
+    export default {
+        name: 'main',
+        data(){
+            return {
+                lists: [{name:'聊天列表',url:'../detail/detail.stml'}]
+            }
+        },
+        methods: {
+            apiready(){
+                
+            },
+            itemAction(e){
+                var item = this.data.lists[e.currentTarget.dataset.index];
+                api.openTabLayout({
+                    name: item.name,
+                    url: item.url,
+                    title: item.name,
+                    bgColor: '#f3f3f3',
+                    slidBackType: 'edge',
+                    softInputDismissMode: ['tap','drag'],
+                    hideNavigationBar:false,
+                    navigationBar:{
+                        background: '#f8f8f8',
+                        shadow: '#ddd'
+                    }
+                })
+            }
+        }
+    }
+</script>
+<style>
+    .main {
+        height: 100%;
+    }
+    .item {
+        height: 44px;
+        justify-content: center; 
+        border-bottom: 0.5px solid #ddd;
+    }
+    .item:active {
+        background-color: #eee;
+    }
+    .name {
+        font-size: 18px;
+        padding-left: 10px;
+    }
+</style>

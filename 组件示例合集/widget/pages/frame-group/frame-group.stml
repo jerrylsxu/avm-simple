@@ -1,0 +1,92 @@
+<template>
+    <view class="main">
+        <view class="nav">
+            <view class="menu" v-for="(item,index) in menuList">
+                <view class={selectedIndex==index?'item item-selected':'item'} data-index={index} onclick={this.fnSetFrameGroupIndex}>
+                    <text class={selectedIndex==index?'item-title item-title-selected':'item-title'}>{item}</text>
+                </view>
+            </view>
+        </view>
+        <frame-group id="frameGroup" preload="0" onchange={this.onchange}></frame-group>
+    </view>
+</template>
+<script>
+    export default {
+        name: 'test',
+        data() {
+            return {
+                menuList: ['view', 'text', 'image'],
+                selectedIndex: 0
+            }
+        },
+        methods:{
+            apiready(){
+                var frames = [];
+                for (var i=0;i<this.data.menuList.length;i++) {
+                    var name = this.data.menuList[i];
+                    frames.push({
+                        name: name,
+                        url: '../' + name + '/' + name + '.stml'
+                    });
+                }
+                var frameGroup = document.getElementById('frameGroup');
+                frameGroup.load({
+                    frames: frames
+                });
+            },
+            fnSetFrameGroupIndex(e) {
+                var index = e.currentTarget.dataset.index;
+                if (this.data.selectedIndex != index) {
+                    this.data.selectedIndex = index;
+                    var frameGroup = document.getElementById('frameGroup');
+                    frameGroup.setIndex({
+                        index: index,
+                        scroll: true
+                    });
+                }
+            },
+            onchange(e){
+                var index = e.detail.index;
+                if (this.data.selectedIndex != index) {
+                    this.data.selectedIndex = index;
+                }
+            }
+        }
+    }
+</script>
+<style>
+	.main {
+        width: 100%;
+        height: 100%;
+	}
+    .nav {
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
+        background-color: #f0f0f0;
+    }
+    .menu {
+        flex: 1;
+        align-items: center;
+    }
+    .item {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    .item-selected {
+        border-bottom: 2px solid #e3007f;
+    }
+    .item-title {
+        color: #444;
+        font-size: 14px;
+    }
+    .item-title-selected {
+        color: #e3007f;
+    }
+    #frameGroup {
+        flex: 1;
+    }
+</style>
