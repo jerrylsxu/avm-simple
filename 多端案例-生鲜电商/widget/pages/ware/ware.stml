@@ -2,12 +2,12 @@
     <view class="main">
         <navigationBar title="商品详情" rightButtonText="分享" onRightButton={this.onRightButton}></navigationBar>
         <scroll-view class="scrollView" scroll-y='true'>
-            <swiper class="swiper shrink" style={'height:'+this.data.swiperHeight+'px;'} indicator-dots indicator-active-color="#e3007f" autoplay circular>
+            <swiper class="swiper" style={'height:'+this.data.swiperHeight+'px;'} indicator-dots indicator-active-color="#e3007f" autoplay circular>
                 <swiper-item v-for="(_item,index) in picList">
                     <image class="img" placeholder="../../image/default_square.png" src={_item} mode="aspectFit" thumbnail="false"></image>
                 </swiper-item>
             </swiper>
-            <view class="info shrink">
+            <view class="info">
                 <text class="name">{this.data.wareInfo.name+' '+(this.data.wareInfo.unit||'')}</text>
                 <text class="description">{this.data.wareInfo.description}</text>
                 <view class="info-price">
@@ -16,20 +16,7 @@
                 </view>
                 <text class="stock">{'仅剩'+(this.data.wareInfo.stock||0)+'件'}</text>
             </view>
-            <view class="item">
-                <text class="itemTitle">配送</text>
-                <text class="itemDesc">现在下单，最快明天9:00送达</text>
-            </view>
-            <view class="item">
-                <text class="itemTitle">促销</text>
-                <text class="itemFlag">限购</text>
-                <text class="itemDesc">每人每天购买不超过2件</text>
-            </view>
-            <view class="item">
-                <text class="itemTitle">福利</text>
-                <text class="itemDesc">邀请新朋友领680元现金奖励</text>
-            </view>
-            <view class="recommend shrink">
+            <view class="recommend">
                 <text class="recommendTitle">推荐商品</text>
                 <scroll-view class="recommendList" scroll-x show-scrollbar={false} enhanced>
                     <view class="recommendItem" v-for="(item,index) in recommendList" data-id={item.id} onclick={this.fnOpenDetailWin}>
@@ -41,9 +28,9 @@
                     </view>
                 </scroll-view>
             </view>
-            <view class="detail shrink">
+            <view class="detail">
                 <text class="detailTitle">商品详情</text>
-                <frame class="detailFrame" name="detailFrame" url="" useWKWebView></frame>
+                <rich-text class="rich-text" nodes={html}></rich-text>
             </view>
         </scroll-view>
         <view class="footer">
@@ -81,6 +68,7 @@ export default{
             },
             wareCount:0,
             recommendList:[],
+            html:'',
             picList:[],
             showSharePage:false
         }
@@ -124,6 +112,7 @@ export default{
                     if (info.picture) {
                         that.data.picList = info.picture;
                     }
+                    that.data.html = info.content?$kn.fitRichText(info.content, api.winWidth-40):'';
                     that.fnGetRecommendWareList();
                 } else {
                     api.toast({
@@ -240,9 +229,6 @@ export default{
         flex: 1;
         overflow: scroll;
     }
-    .shrink {
-        flex-shrink: 0;
-    }
     .swiper {
         width: 100%;
         background-color: #fff;
@@ -287,30 +273,6 @@ export default{
         font-size: 14px;
         color: #888;
     }
-    .item {
-        flex-direction: row;
-        flex-shrink: 0;
-        padding: 20px;
-        margin-bottom: 10px;
-        background-color: #fff;
-    }
-    .itemTitle {
-        margin-right: 20px;
-        font-size: 15px;
-        color: #888;
-    }
-    .itemFlag {
-        color: #ff4114;
-        font-size: 11px;
-        border: 1px solid #ff4114;
-        border-radius: 6px;
-        padding: 2px 3px;
-        margin-right: 10px;
-    }
-    .itemDesc {
-        font-size: 15px;
-        color: #000;
-    }
     .recommend {
         height: 240px;
         padding: 20px;
@@ -350,16 +312,15 @@ export default{
         color: #e3007f;
     }
     .detail {
-        padding: 20px;
+        padding: 20px 20px 0;
         margin-bottom: 10px;
         background-color: #fff;
     }
     .detailTitle {
         font-size: 18px;
     }
-    .detailFrame {
+    .rich-text {
         margin-top: 10px;
-        height: 100px;
     }
     .footer {
         flex-direction: row;

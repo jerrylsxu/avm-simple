@@ -2,14 +2,11 @@
  * APICloud JavaScript Library
  * Copyright (c) 2014 apicloud.com
  */
-var $kn = (function(){
-    var u = {};
-
-    u.byId = function(id) {
+const $kn = {
+    byId(id) {
         return document.getElementById(id);
-    }
-
-    u.ajax = function(p, callback) {
+    },
+    ajax(p, callback) {
         var param = p;
         if (!param.headers) {
             param.headers = {};
@@ -22,7 +19,7 @@ var $kn = (function(){
             var baseUrl = 'https://a8888888888888-pd.apicloud-saas.com/api/';
             param.url = baseUrl + param.url;
         }
-        api.ajax(param, function(ret, err) {
+        api.ajax(param, (ret, err)=> {
             if (callback) callback(ret, err);
             if (ret) {
                 var status =  ret.status;
@@ -36,7 +33,7 @@ var $kn = (function(){
                             value: true
                         });
 
-                        u.setUserInfo('');
+                        this.setUserInfo('');
                         api.alert({
                             msg: '登录已失效，请重新登录'
                         }, function() {
@@ -52,55 +49,50 @@ var $kn = (function(){
                 }
             }
         });
-    }
-
-    u.getUserInfo = function() {
+    },
+    getUserInfo() {
         var value = api.getPrefs({
             key: 'userInfo',
             sync: true
         });
         return value?JSON.parse(value):'';
-    }
-
-    u.setUserInfo = function(userInfo) {
+    },
+    setUserInfo(userInfo) {
         api.setPrefs({
             key: 'userInfo',
             value: userInfo
         });
-    }
-
-    u.getCurrentCityInfo = function() {
+    },
+    getCurrentCityInfo() {
         var value = api.getPrefs({
             key: 'currentCity',
             sync: true
         });
         return value?JSON.parse(value):'';
-    }
-
-    u.setCurrentCityInfo = function(cityInfo) {
+    },
+    setCurrentCityInfo(cityInfo) {
         api.setPrefs({
             key: 'currentCity',
             value: cityInfo
         });
-    }
-
-    u.getWareTypeList = function() {
+    },
+    getWareTypeList() {
         var value = api.readFile({
             sync: true,
             path: 'fs://WareTypeList'
         });
         return value?JSON.parse(value):'';
-    }
-
-    u.setWareTypeList = function(list) {
+    },
+    setWareTypeList(list) {
         api.writeFile({
             path: 'fs://WareTypeList',
             data: JSON.stringify(list)
         });
+    },
+    fitRichText(richtext, width){
+        var str = `<img style="max-width:${width}px;"`;
+        var result = richtext.replace(/\<img/gi, str);
+        return result;
     }
-    
-    window.$kn = u;
-	return u;
-})();
-
+};
 export default $kn;

@@ -5,10 +5,10 @@
             <view class="info-addr">
                 <image class="addr-icon" src="../../image/icon_address.png"/>
                 <view class="addr-middle">
-                    <text class="text-black">{'收货人: '+this.data.addressInfo.name+'   '+this.data.addressInfo.tel}</text>
+                    <text class="text-black">{'收货人: '+addressInfo.name+'   '+addressInfo.mobile}</text>
                     <view class="addr-bottom">
-                        <text class="text-red">{'['+this.data.addressInfo.tag+']'}</text>
-                        <text class="text-grey">{this.data.addressInfo.address}</text>
+                        <text class="text-red">{'['+addressInfo.typeDesc+']'}</text>
+                        <text class="text-grey">{addressInfo.address}</text>
                     </view>
                 </view>
                 <image class="addr-arrow-icon" src="../../image/item_user_address_right.png"/>
@@ -87,9 +87,9 @@ export default{
             discounts:0,
             addressInfo:{
                 name: 'APICloud',
-                tel: '15100000000',
-                tag: '公司',
-                address: '北京市海淀区文教产业园'
+                mobile: '15100000000',
+                typeDesc: '公司',
+                address: '中关村科技园区电子城科技园'
             },
             payList:[{
                 icon:'../../image/icon_balance_pay.png',

@@ -1,7 +1,7 @@
 <template>
   <view class="main">
     <view class="header-part">
-        <safe-area></safe-area>
+        <status-bar-view></status-bar-view>
         <view class="header-nav">
             <view class="header-left" onclick="fnOpenCitySelectorFrame();">
                 <image class={this.data.citySelectorOpened?'header-left-arrow header-left-arrow-active':'header-left-arrow'} src="../../image/arrow_down.png"></image>
@@ -52,8 +52,9 @@
 </template>
 <script>
 import $kn from "../../script/kn.js";
-import minicart from '../../components/minicart_frame.stml';
-import cityselector from '../cityselector/cityselector.stml';
+import '../../components/minicart_frame.stml';
+import '../../components/status-bar-view.stml';
+import '../cityselector/cityselector.stml';
 export default{
     name:'main',
     data() {
@@ -74,6 +75,11 @@ export default{
     },
     methods:{
         apiready(){
+            if (api.setStatusBarStyle) {
+                api.setStatusBarStyle({
+                    style: 'light'
+                });
+            }
             this.initEventListenner();
 
             // 从缓存中获取上一次选择的城市信息

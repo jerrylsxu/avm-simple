@@ -1,5 +1,6 @@
 <template>
-    <safe-area class="nav-container">
+    <view class="nav-container">
+        <status-bar-view></status-bar-view>
         <view class="nav-header">
             <view class="nav-header-button nav-left-button" onclick={this.props.onLeftButton ? this.props.onLeftButton : this.onLeftButton}>
                 <image width={this.props.leftButtonWidth ? this.props.leftButtonWidth : 11} src={this.props.leftButtonIcon ? this.props.leftButtonIcon : '../../image/back.png'} mode="widthFix"></image>
@@ -11,16 +12,12 @@
                 <text class="nav-header-text">{this.props.rightButtonText}</text>
             </view>
         </view>
-    </safe-area>
+    </view>
 </template>
 <script>
+import './status-bar-view.stml';
 export default {
     name: 'navigationBar',
-    data() {
-        return {
-            
-        }
-    },
     methods: {
         onLeftButton(e){
             api.closeWin();
