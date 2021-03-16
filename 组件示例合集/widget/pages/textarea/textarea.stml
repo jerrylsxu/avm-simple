@@ -1,7 +1,7 @@
 <template>
     <scroll-view class="main" scroll-y>
-        <textarea placeholder="输入限制为50" maxlength="50" autofocus/>
-        <textarea placeholder="自动增长高度" auto-height/>
+        <textarea class="textarea" placeholder="输入限制为50" maxlength="50" autofocus/>
+        <textarea class="textarea" placeholder="自动增长高度" auto-height/>
     </scroll-view>
 </template>
 <style>
@@ -9,7 +9,7 @@
         width: 100%;
         height: 100%;
 	}
-    textarea {
+    .textarea {
         margin: 8px;
         width: 60%;
         min-height: 50px;

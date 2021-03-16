@@ -1,9 +1,9 @@
 <template>
     <scroll-view class="main" scroll-y>
-        <text>普通文本</text>
-        <text class="bold">粗体文本</text>
-        <text class="italic">斜体文本</text>
-        <text class="shadow">Text-shadow 效果</text>
+        <text class="text">普通文本</text>
+        <text class="text bold">粗体文本</text>
+        <text class="text italic">斜体文本</text>
+        <text class="text shadow">Text-shadow 效果</text>
     </scroll-view>
 </template>
 <style>
@@ -11,7 +11,7 @@
         width: 100%;
         height: 100%;
 	}
-    text {
+    .text {
         height: 30px;
         font-size: 18px;
     }

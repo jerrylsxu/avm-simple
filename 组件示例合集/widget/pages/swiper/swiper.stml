@@ -1,15 +1,15 @@
 <template>
     <scroll-view class="main" scroll-y>
         <text class="title">通过v-for加载</text>
-		<swiper autoplay circular indicator-dots indicator-color="#ddd" indicator-active-color="#f0f">
-			<swiper-item v-for="(_item,_index) in dataList">
+		<swiper class="swiper" autoplay circular indicator-dots indicator-color="#ddd" indicator-active-color="#f0f">
+			<swiper-item class="swiper-item" v-for="(_item,_index) in dataList">
 				<text class="desc">{_item}</text>
 			</swiper-item>
 		</swiper>
         <text class="title">通过load方法加载</text>
         <view class="container">
-            <swiper id="customSwiper" autoplay circular onchange={this.onchange}>
-                <swiper-item reusable>
+            <swiper class="swiper" id="customSwiper" autoplay circular onchange={this.onchange}>
+                <swiper-item class="swiper-item" reusable>
                     <text class="desc">{item}</text>
                 </swiper-item>
             </swiper>
@@ -24,12 +24,12 @@
         width: 100%;
         height: 100%;
 	}
-    swiper {
+    .swiper {
         width: 100%;
         height: 200px;
         background-color: blue;
     }
-    swiper-item {
+    .swiper-item {
   	    justify-content: center;
     }
     .title {

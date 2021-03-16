@@ -1,13 +1,13 @@
 <template>
     <scroll-view class="main" scroll-y>
         <safe-area></safe-area>
-        <picker id="selector" mode="selector" value={selectorValue} onChange={this.selectorChange}>
+        <picker class="picker" id="selector" mode="selector" value={selectorValue} onChange={this.selectorChange}>
 			<text>选择性别：{genderDesc}</text>
         </picker>
-		<picker id="multiSelector" mode="multiSelector" value={multiSelectorValue} onChange={this.multiSelectorChange}>
+		<picker class="picker" id="multiSelector" mode="multiSelector" value={multiSelectorValue} onChange={this.multiSelectorChange}>
 			<text>选择年月：{dateDesc}</text>
 		</picker>
-        <picker id="areaMltiSelector" mode="multiSelector" range-key="name" value={areaMltiSelectorValue} onchange={this.areaMultiSelectorChange} oncolumnchange={this.areaMultiSelectorColumnChange}>
+        <picker class="picker" id="areaMltiSelector" mode="multiSelector" range-key="name" value={areaMltiSelectorValue} onchange={this.areaMultiSelectorChange} oncolumnchange={this.areaMultiSelectorColumnChange}>
             <text>选择区域：{areaDesc}</text>
         </picker>
     </scroll-view>
@@ -17,7 +17,7 @@
         width: 100%;
         height: 100%;
 	}
-    picker {
+    .picker {
         margin: 8px;
     }
 </style>

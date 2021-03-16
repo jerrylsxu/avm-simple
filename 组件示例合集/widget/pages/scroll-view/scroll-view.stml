@@ -1,13 +1,13 @@
 <template>
     <view>
         <text class="title">水平滚动</text>
-        <scroll-view scroll-x scroll-y="false">
+        <scroll-view class="scroll-view" scroll-x scroll-y="false">
             <view class="item red"></view>
             <view class="item green"></view>
             <view class="item blue"></view>
         </scroll-view>
         <text class="title">垂直滚动</text>
-        <scroll-view scroll-y>
+        <scroll-view class="scroll-view" scroll-y>
             <view class="item red"></view>
             <view class="item green"></view>
             <view class="item blue"></view>
@@ -15,7 +15,7 @@
     </view>
 </template>
 <style>
-    scroll-view {
+    .scroll-view {
         width: 100%;
         height: 150px;
     }

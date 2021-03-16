@@ -1,7 +1,7 @@
 <template>
     <scroll-view class="main" scroll-y>
         <text>组件置于label内部</text>
-		<checkbox-group onChange={this.checkboxgroupChanged}>
+		<checkbox-group class="checkbox-group" onChange={this.checkboxgroupChanged}>
 			<label class="item">
 				<checkbox checked value="checkbox_c"/>
 				<text>中国</text>
@@ -12,7 +12,7 @@
 			</label>
 		</checkbox-group>
         <text>使用for找到表单组件</text>
-		<radio-group onChange={this.radiogroupChanged}>
+		<radio-group class="radio-group" onChange={this.radiogroupChanged}>
 			<view class="item">
 				<radio id="china" checked value="radio_c"/>
                 <label for="china"><text>中国</text></label>
@@ -29,11 +29,11 @@
         width: 100%;
         height: 100%;
 	}
-    checkbox-group {
+    .checkbox-group {
         flex-direction:row;
         margin: 5px;
     }
-    radio-group {
+    .radio-group {
         flex-direction:row;
         margin: 5px;
     }

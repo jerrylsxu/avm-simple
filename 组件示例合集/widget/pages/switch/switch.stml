@@ -1,8 +1,8 @@
 <template>
     <scroll-view class="main" scroll-y>
-        <switch checked onchange={this.onchange}/>
-        <switch checked color="#00f" onchange={this.onchange}/>
-        <switch disabled/>
+        <switch class="switch" checked onchange={this.onchange}/>
+        <switch class="switch" checked color="#00f" onchange={this.onchange}/>
+        <switch class="switch" disabled/>
     </scroll-view>
 </template>
 <style>
@@ -10,7 +10,7 @@
         width: 100%;
         height: 100%;
 	}
-    switch {
+    .switch {
         margin: 8px;
     }
 </style>

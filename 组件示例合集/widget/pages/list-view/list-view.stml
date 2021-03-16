@@ -1,6 +1,6 @@
 <template>
     <list-view id="listView" class="main" enable-back-to-top onscrolltolower={this.onscrolltolower}>
-		<cell onclick={this.itemClick}>
+		<cell class="cell" onclick={this.itemClick}>
 			<text class="title">{item.title}</text>
 			<text class="subtitle">{item.subtitle}</text>
 		</cell>
@@ -14,16 +14,13 @@
         width: 100%;
         height: 100%;
 	}
-    input {
-        margin: 8px;
-    }
-	cell {
+    .cell {
 		padding: 8px;
 		height: 60px;
 		border-bottom: 0.5px solid #ddd;
 		background-color: #fff;
 	}
-	cell:active {
+	.cell:active {
 		background-color: #ddd;
 	}
 	.title {

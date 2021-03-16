@@ -1,16 +1,16 @@
 <template>
     <scroll-view class="main" scroll-y>
         <text class="title">使用默认控件</text>
-		<video src={url} poster={poster} mode="aspectFit"></video>
+		<video class="video" src={url} poster={poster} mode="aspectFit"></video>
         <text class="title">自定义控件</text>
-		<video id="video" src={url} poster={poster} controls="false" currentTime={this.data.currentTime} onplay={this.onplay} onpause={this.onpause} onended={this.onended} ontimeupdate={this.ontimeupdate} onwaiting={this.onwaiting} onerror={this.onerror} onprogress={this.onprogress} onloadedmetadata={this.onloadedmetadata}>
+		<video class="video" id="video" src={url} poster={poster} controls="false" currentTime={this.data.currentTime} onplay={this.onplay} onpause={this.onpause} onended={this.onended} ontimeupdate={this.ontimeupdate} onwaiting={this.onwaiting} onerror={this.onerror} onprogress={this.onprogress} onloadedmetadata={this.onloadedmetadata}>
             <view class="control-container">
             <view class="control">
 				<text class="btn" onclick={this.playorpause}>{isPlaying?'暂停':'播放'}</text>
 				<text class="time">{timeProgressDesc}</text>
 				<view class="progress-container">
-					<progress activeColor="#999" value={loadProgressValue}></progress>
-					<slider block-size="12" backgroundColor="rgba(0,0,0,0)" value={sliderValue} onchange={this.onSliderChange} onchanging={this.onSliderChanging}/>
+					<progress class="progress" activeColor="#999" value={loadProgressValue}></progress>
+					<slider class="slider" block-size="12" backgroundColor="rgba(0,0,0,0)" value={sliderValue} onchange={this.onSliderChange} onchanging={this.onSliderChanging}/>
 				</view>
 				<text class="time">{totalTimeDesc}</text>
 				<text class="btn" onclick={this.fullScreenAction}>{fullScreen?'返回':'全屏'}</text>
@@ -29,7 +29,7 @@
         padding: 10px 0;
         font-size: 20px;
     }
-    video {
+    .video {
         width: 100%;
         height: 200px;
         background-color: #666;
@@ -60,11 +60,11 @@
         justify-content: center;
         height: 100%;
     }
-    progress {
+    .progress {
         width: 100%;
         height: 3px;
     }
-    slider {
+    .slider {
         position: absolute;
         width: 100%;
         height: 100%;

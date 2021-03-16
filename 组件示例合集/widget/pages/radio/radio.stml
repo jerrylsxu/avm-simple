@@ -1,6 +1,6 @@
 <template>
     <scroll-view class="main" scroll-y>
-		<radio-group onChange={this.radiogroupChanged}>
+		<radio-group class="radio-group" onChange={this.radiogroupChanged}>
 			<label>
 				<radio checked color="#f0f" value="radio_c"/>
 				<text>中国</text>
@@ -10,7 +10,7 @@
 				<text>美国</text>
 			</label>
 		</radio-group>
-		<radio-group onChange={this.radiogroupChanged}>
+		<radio-group class="radio-group" onChange={this.radiogroupChanged}>
 			<label>
 				<radio checked icon="../../image/check.png" selectedIcon="../../image/checked.png" value="radio_c"/>
 				<text>中国</text>
@@ -27,7 +27,7 @@
         width: 100%;
         height: 100%;
 	}
-    radio-group {
+    .radio-group {
         flex-direction:row;
     }
     label {
