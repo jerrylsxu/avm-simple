@@ -33,7 +33,7 @@
         name: 'test',
         data(){
             return {
-                src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594640831144&di=3f70253aac03fd3b65c21c0620720631&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_70%2Cc_zoom%2Cw_640%2Fupload%2F20170421%2F06ec60b558ba4c1e81f8aa0f689fa873_th.jpeg',
+                src: 'http://img.mp.itc.cn/q_70,c_zoom,w_640/upload/20170421/06ec60b558ba4c1e81f8aa0f689fa873_th.jpeg',
                 list: [{
                     mode: 'scaleToFill',
                     text: 'scaleToFill：不保持纵横比缩放图片，图片完全拉伸适应'
