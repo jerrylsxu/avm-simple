@@ -35,14 +35,14 @@ export default {
             if (this.data.refreshState == 'normal') {
                 return 'refreshIcon-normal';
             } else if (this.data.refreshState == 'dragging') {
-                return 'refreshIcon-dragging';
+                return 'refreshIcon-normal refreshIcon-dragging';
             } else if (this.data.refreshState == 'refreshing') {
-                return 'refreshIcon-refreshing';
+                return 'refreshIcon-normal refreshIcon-refreshing';
             }
         },
         refreshLoadingClass() {
             if (this.data.refreshState == 'refreshing') {
-                return 'refreshLoading-refreshing';
+                return 'refreshLoading refreshLoading-refreshing';
             } else {
                 return 'refreshLoading';
             }
