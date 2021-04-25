@@ -3,6 +3,9 @@
         <switch class="switch" checked onchange={this.onchange}/>
         <switch class="switch" checked color="#00f" onchange={this.onchange}/>
         <switch class="switch" disabled/>
+        <view class="switch-box">
+            <switch class="switch-scale" checked onchange={this.onchange}/>
+        </view>
     </scroll-view>
 </template>
 <style>
@@ -12,6 +15,15 @@
 	}
     .switch {
         margin: 8px;
+    }
+    .switch-box {
+        justify-content: center;
+        align-items: center;
+        width: 76px;
+        height: 46px;
+    }
+    .switch-scale {
+        transform: scale(1.5, 1.5);
     }
 </style>
 <script>
